@@ -9,10 +9,12 @@ class Track{
      * Sets up the track for the first time. 
      */ 
     public function setupTrack(){
-        for($i=0; $i<2000;$i+=40){
+	$this->elements = [];    
+	for($i=0; $i<2000;$i+=40){
             $element = rand(0,1); // 0 for curve, 1 for straight
-            $element_array = array_fill(0,40,$element); // array of 40 of the same element type
-            array_push($this->elements, $element_array);
+            for($j=0;$j<40;$j++){
+                array_push($this->elements, $element);
+            }
         }
     }
     public function __construct()
@@ -26,6 +28,9 @@ class Track{
      */
     public function checkNextElement($element_index){
         $next_element_index = (round($element_index / 40) + 1) * 40;
+        if(!array_key_exists($next_element_index, $this->elements)){
+            return null;
+        }
         return $this->elements[$next_element_index];
     }
 }

@@ -1,7 +1,8 @@
 <?php
-include('RaceResult');
-include('Cars');
-include('Track');
+include('RaceResult.php');
+include('Car.php');
+include('Track.php');
+include('RoundResult.php');
 class Race
 {
     public function runRace(): RaceResult
@@ -32,7 +33,9 @@ class Race
                     $carPositions[$i] = $carPositions[$i] + ($prevElement[$i] == 0 ? $cars[$i]->speed_on_curve : $cars[$i]->speed_on_straight);
                     if($carPositions[$i] > $max_position){
                         $carPositions[$i] = $max_position;
-                        $prevElement[$i] = $track->elements[$max_position];
+                        if(array_key_exists($max_position,$track->elements)){
+                            $prevElement[$i] = $track->elements[$max_position];
+                        }
                     }
                 }
                 if($carPositions[$i] == 2000){
